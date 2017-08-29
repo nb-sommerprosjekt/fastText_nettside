@@ -1,3 +1,6 @@
 test.py
 model_final100.bin
 model_final2.bin
+*.txt
+*.idea
+*__pycache__
