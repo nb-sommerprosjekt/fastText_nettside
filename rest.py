@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from flask import Flask
 from flask_cors import CORS
 from html2text import html2text
+import urllib.parse
 
 import classifier
 import preprocessor
@@ -17,8 +18,7 @@ def read_text_url(url):
     st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
     log_file = open("log_file.txt", "a")
 
-    url = url.replace("%3A",":")
-    url_decoded = url.replace("%2F","/")
+    url_decoded =urllib.parse.unquote(url)
 
     r = requests.get(url_decoded)
     soup = BeautifulSoup(r.text)
