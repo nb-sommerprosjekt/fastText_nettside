@@ -6,6 +6,8 @@ from html2text import html2text
 import urllib.parse
 
 import fasttext
+import json
+
 import classifier
 import preprocessor
 import time
@@ -26,12 +28,9 @@ def read_text_url(url):
     streng = soup.get_text()
     streng.encode('utf8')
     clean = html2text(streng)
-<<<<<<< HEAD
-    res = classifier.run_classification(clean,classifier)
-=======
-    res = classifier.run_classification(clean)
 
->>>>>>> 986ecdb39bb67daa980c2f572c8318aeeb5bc180
+    res = classifier.run_classification(clean,classifieren,3)
+
     total_time = time.time()- start
 
     log_file.write("Tidspkt:"+str(st)+'\n\n'+"url:::"
@@ -41,13 +40,14 @@ def read_text_url(url):
                    +"Tekst brukt til klassifisering:"+'\n'+'\n'
                    +str(preprocessor.text_to_clean_stemmed_text(clean,False)))
 
-    return res
+    return json.dumps(res)
 
 
 
 
 
 if __name__ == '__main__':
-    app.run(debug = True)
     classifier_name = "model_final100.bin"
-    classifier = fasttext.load_model(classifier_name)
+    classifieren = fasttext.load_model(classifier_name)
+    app.run(debug = True)
+

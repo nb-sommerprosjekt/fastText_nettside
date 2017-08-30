@@ -13,16 +13,9 @@ def run_classification(text,classifier,k):
     text= text_to_clean_stemmed_text(text,True)
 
     #Load pre-trained model
-<<<<<<< HEAD
-
 
     results= classifier.predict_proba([text],k=k)
-=======
-    classifier_name="model_final2.bin"
-    classifier = fasttext.load_model(classifier_name)
 
-    results= classifier.predict_proba([text],k=3)
->>>>>>> 986ecdb39bb67daa980c2f572c8318aeeb5bc180
 
     for i in range(len(results[0])):
         results[0][i]=list(results[0][i])
@@ -31,7 +24,7 @@ def run_classification(text,classifier,k):
 
     #returns list of 10 lists, where each list contains a label and likeliness.
     print(time.time()-tid)
-    return format_output(results[0])
+    return results[0]
 
 
 
