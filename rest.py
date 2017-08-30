@@ -1,53 +1,78 @@
 import requests
+import signal
 from bs4 import BeautifulSoup
 from flask import Flask
+from flask import request
+import fasttext
 from flask_cors import CORS
 from html2text import html2text
-import urllib.parse
-
-import fasttext
-import json
-
+import urllib
 import classifier
 import preprocessor
+import json
+
+
+#import classifier
+#import preprocessor
 import time
 import datetime
+
 app = Flask(__name__)
 CORS(app)
 
+global log_file 
+
+
+def init():
+	global log_file
+	log_file = open("log_file.txt", "a")
+	start = time.time()
+	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+	log_file.write("Init Tidspkt:"+str(st))
+
+	print("Init")
+	
+def finito(signum, frame):
+	global log_file
+	log_file.close()
+	
+	print("Finito")
+	exit()
+
+
+
 @app.route('/rest_doc/<path:url>', methods = ['GET'])
 def read_text_url(url):
-    start = time.time()
-    st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
-    log_file = open("log_file.txt", "a")
+	global log_file
+	start = time.time()
+	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+	url_decoded =urllib.parse.unquote(url)
+	r = requests.get(url_decoded)
+	soup = BeautifulSoup(r.text)
+	streng = soup.get_text()
+	streng.encode('utf8')
+	clean = html2text(streng)
 
-    url_decoded =urllib.parse.unquote(url)
+	res = classifier.run_classification(clean, classifieren, 3)
 
-    r = requests.get(url_decoded)
-    soup = BeautifulSoup(r.text)
-    streng = soup.get_text()
-    streng.encode('utf8')
-    clean = html2text(streng)
+	total_time = time.time() - start
 
-    res = classifier.run_classification(clean,classifieren,3)
+	log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
+				   + str(url_decoded) + "\n" + "\n"
+				   + str(res) + "\n" + "\n"
+				   + "Tid brukt:" + str(total_time) + "\n" + "\n"
+				   + "Tekst brukt til klassifisering:" + '\n' + '\n'
+				   + str(preprocessor.text_to_clean_stemmed_text(clean, False)))
 
-    total_time = time.time()- start
-
-    log_file.write("Tidspkt:"+str(st)+'\n\n'+"url:::"
-                   +str(url_decoded)+"\n"+"\n"
-                   +str(res)+"\n"+"\n"
-                   +"Tid brukt:"+str(total_time)+"\n"+"\n"
-                   +"Tekst brukt til klassifisering:"+'\n'+'\n'
-                   +str(preprocessor.text_to_clean_stemmed_text(clean,False)))
-
-    return json.dumps(res)
-
-
-
+	return json.dumps(res)
 
 
 if __name__ == '__main__':
-    classifier_name = "model_final100.bin"
-    classifieren = fasttext.load_model(classifier_name)
-    app.run(debug = True)
+	init()
+	classifier_name = "model_final100.bin"
+	classifieren = fasttext.load_model(classifier_name)
+	original_sigint = signal.getsignal(signal.SIGINT)
+	signal.signal(signal.SIGINT, finito)
+	app.run(debug = True)
+	finito()
 
