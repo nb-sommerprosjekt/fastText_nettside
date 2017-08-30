@@ -26,7 +26,9 @@ def read_text_url(url):
     streng.encode('utf8')
     clean = html2text(streng)
     res = classifier.run_classification(clean)
+
     total_time = time.time()- start
+
     log_file.write("Tidspkt:"+str(st)+'\n\n'+"url:::"
                    +str(url_decoded)+"\n"+"\n"
                    +str(res)+"\n"+"\n"
