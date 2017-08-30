@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>Basic 76</title>
+<title>NORART klassifikator</title>
 <meta charset="UTF-16">
 <link rel="stylesheet" href="styles/layout.css" type="text/css">
 <script src="scripts/html5shiv.js"></script>
@@ -28,7 +28,7 @@
     <section id="slider" class="clear">
       <input type ="text" id ="URL_from_user"  placeholder="URLen for artikkelen"  </input><br>
 
-      <button onclick="UserAction()"  >Hent ned artikkel</button>
+      <button onclick="UserAction()">Hent ned artikkel</button>
 
       <script>
         function UserAction() {
@@ -38,17 +38,21 @@
             var server_url = "http://127.0.0.1:5000/rest_doc/"
             full_path_to_response = server_url.concat(url_encoded)
             var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", full_path_to_response, false);
+            result=xhttp.open("GET", full_path_to_response, false);
             xhttp.setRequestHeader("Content-type", "application/json");
+            //xhttp.send();
             xhttp.send();
-
-            window.open(full_path_to_response.toString());
+            result=xhttp.responseText;
+            //window.open(full_path_to_response.toString());
+            document.getElementById("results").innerHTML=result
         }
       </script>
     </section>
     
       <article class="two_third">
         <p>Det er ikke garantert at man vi klarer å laste ned artikkelen automatisk, men du vil få se en forhåndsvisning før klassifisering. Om den ikke fikk lastet den ned, så må du lime den inn manuelt. Det kan gjøres <a href="text.html">her</a></p>
+      </article>
+      <article class="two_third" id="results">
       </article>
   </div>
 </div>

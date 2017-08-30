@@ -86,7 +86,7 @@ textarea{width: 500px; height:400px;}
 #header nav ul{}
 #header nav li{display:inline; margin-right:25px; text-transform:uppercase;}
 #header nav li.last{margin-right:0;}
-#header nav li a{border-width:5px solid #DEDEDE;}
+#header nav li a{ border-width:3px; border-color: #666a72;border-style: solid;border-radius: 4px;padding:5px;}
 #header nav li a:hover{color:#FF9900; background-color:#333333;}
 
 /*----------------------------------------------Content Area-------------------------------------*/

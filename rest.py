@@ -4,6 +4,7 @@ from flask import Flask
 from flask_cors import CORS
 from html2text import html2text
 
+import fasttext
 import classifier
 import preprocessor
 import time
@@ -25,7 +26,7 @@ def read_text_url(url):
     streng = soup.get_text()
     streng.encode('utf8')
     clean = html2text(streng)
-    res = classifier.run_classification(clean)
+    res = classifier.run_classification(clean,classifier)
     total_time = time.time()- start
     log_file.write("Tidspkt:"+str(st)+'\n\n'+"url:::"
                    +str(url_decoded)+"\n"+"\n"
@@ -42,4 +43,5 @@ def read_text_url(url):
 
 if __name__ == '__main__':
     app.run(debug = True)
-
+    classifier_name = "model_final100.bin"
+    classifier = fasttext.load_model(classifier_name)

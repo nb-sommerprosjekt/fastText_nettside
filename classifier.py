@@ -5,7 +5,7 @@ import time
 
 
 
-def run_classification(text):
+def run_classification(text,classifier,k):
 
     #To debug run time
     tid=time.time()
@@ -13,10 +13,9 @@ def run_classification(text):
     text= text_to_clean_stemmed_text(text,True)
 
     #Load pre-trained model
-    classifier_name="model_final100.bin"
-    classifier = fasttext.load_model(classifier_name)
 
-    results= classifier.predict_proba([text],k=10)
+
+    results= classifier.predict_proba([text],k=k)
 
     for i in range(len(results[0])):
         results[0][i]=list(results[0][i])
