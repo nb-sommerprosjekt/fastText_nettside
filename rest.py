@@ -64,7 +64,28 @@ def read_text_url(url):
 
 	return json.dumps(res)
 
+@app.route('/rest_text/', methods = ['GET','POST'])
 
+def read_text():
+	text = request.json
+	#print(request.json)
+	global log_file
+	start = time.time()
+	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+	text.encode('utf8')
+	res = classifier.run_classification(text, classifieren, 3)
+
+	total_time = time.time() - start
+
+	log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
+				   + str(text) + "\n" + "\n"
+				   + str(res) + "\n" + "\n"
+				   + "Tid brukt:" + str(total_time) + "\n" + "\n"
+				   + "Tekst brukt til klassifisering:" + '\n' + '\n'
+				   )
+
+	return json.dumps(res)
+	#return request.json
 if __name__ == '__main__':
 	init()
 	classifier_name = "model_final100.bin"
