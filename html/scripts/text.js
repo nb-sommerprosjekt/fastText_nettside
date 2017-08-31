@@ -1,7 +1,7 @@
-function generateList(url,result,id_name){
+function populateList(url,result,id_name){
               var listContainer = document.getElementById(id_name);
               var header = document.createElement("h2")
-              var paragraph= document.createTextNode("Her er resultatet fra: "+url);
+              var paragraph= document.createTextNode("Her er resultatet fra: ");
               header.appendChild(paragraph);
               listContainer.appendChild(header);
               var newList = document.createElement("ul");
@@ -22,10 +22,10 @@ function generateList(url,result,id_name){
 
 }
 
-function UserActionText(){
+function getClassificationText(){
 
     var text =  document.getElementById('text_from_user').value;
-    var server_url = "http://127.0.0.1:5000/rest_text/";
+    var server_url = "http://tensor-1.nb.no:5000/rest_text/";
     var xhttp = new XMLHttpRequest();
     var result=xhttp.open("POST", server_url, false);
     xhttp.setRequestHeader("Content-type","application/json");
@@ -37,6 +37,5 @@ function UserActionText(){
     console.log(result);
     console.log(typeof result);
 
-//    document.getElementById("results").innerHTML=result;
-    generateList(text,result,"results");
+    populateList(text,result,"results");
 }
