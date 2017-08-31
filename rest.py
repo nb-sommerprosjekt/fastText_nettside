@@ -41,28 +41,31 @@ def finito(signum, frame):
 
 @app.route('/rest_doc/<path:url>', methods = ['GET'])
 def read_text_url(url):
-	global log_file
-	start = time.time()
-	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
-	url_decoded =urllib.parse.unquote(url)
-	r = requests.get(url_decoded)
-	soup = BeautifulSoup(r.text)
-	streng = soup.get_text()
-	streng.encode('utf8')
-	clean = html2text(streng)
+	try:
+		global log_file
+		start = time.time()
+		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+		url_decoded =urllib.parse.unquote(url)
+		r = requests.get(url_decoded)
+		soup = BeautifulSoup(r.text)
+		streng = soup.get_text()
+		streng.encode('utf8')
+		clean = html2text(streng)
 
-	res = classifier.run_classification(clean, classifieren, 3)
+		res = classifier.run_classification(clean, classifieren, 3)
 
-	total_time = time.time() - start
+		total_time = time.time() - start
 
-	log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
-				   + str(url_decoded) + "\n" + "\n"
-				   + str(res) + "\n" + "\n"
-				   + "Tid brukt:" + str(total_time) + "\n" + "\n"
-				   + "Tekst brukt til klassifisering:" + '\n' + '\n'
-				   + str(preprocessor.text_to_clean_stemmed_text(clean, False)))
+		log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
+					   + str(url_decoded) + "\n" + "\n"
+					   + str(res) + "\n" + "\n"
+					   + "Tid brukt:" + str(total_time) + "\n" + "\n"
+					   + "Tekst brukt til klassifisering:" + '\n' + '\n'
+					   + str(preprocessor.text_to_clean_stemmed_text(clean, False)))
 
-	return json.dumps(res)
+		return json.dumps(res)
+	except Exception as e:
+		return json.dumps("Noe gikk galt")
 
 @app.route('/rest_text/', methods = ['GET','POST'])
 

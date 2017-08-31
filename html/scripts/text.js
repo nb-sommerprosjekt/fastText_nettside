@@ -37,7 +37,11 @@ function getClassificationText(){
     console.log(result);
     console.log(typeof result);
     if (result=="Noe gikk galt"){
-      getElementById("results")="Noe gikk veldig galt. Prøv annen input";
+      var listContainer = document.getElementById("results");
+      var header = document.createElement("h2")
+      var paragraph= document.createTextNode("Noe gikk galt under klassifiseringen. Teksten må være norsk. Om denne meldingen kommer når du prøver å klassifisere andre ting, kan det være noe feil med serveren. Vennligst ta kontakt med 'sommervikarene' om problemet vedvarer.");
+      header.appendChild(paragraph);
+      listContainer.appendChild(header);
     }
     else{
       populateList(text,result,"results");
