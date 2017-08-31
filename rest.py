@@ -12,6 +12,7 @@ import preprocessor
 import json
 
 
+
 import time
 import datetime
 
@@ -44,7 +45,12 @@ def read_text_url(url):
 	global log_file
 	start = time.time()
 	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+
 	url_decoded =urllib.parse.unquote(url)
+	#Fikser urler som ikke er fullstendige. Altså mangler "http://".
+	url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded,scheme ='http'))
+	url_decoded = url_decoded.replace('///','//')
+
 	r = requests.get(url_decoded)
 	soup = BeautifulSoup(r.text)
 	streng = soup.get_text()
