@@ -67,24 +67,32 @@ def read_text_url(url):
 @app.route('/rest_text/', methods = ['GET','POST'])
 
 def read_text():
-	text = request.json
-	#print(request.json)
-	global log_file
-	start = time.time()
-	st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
-	text.encode('utf8')
-	res = classifier.run_classification(text, classifieren, 3)
+	try:
+		text = request.json
+		#print(request.json)
+		global log_file
+		start = time.time()
+		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+		text.encode('utf8')
 
-	total_time = time.time() - start
+		res = classifier.run_classification(text, classifieren, 3)
 
-	log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
-				   + str(text) + "\n" + "\n"
-				   + str(res) + "\n" + "\n"
-				   + "Tid brukt:" + str(total_time) + "\n" + "\n"
-				   + "Tekst brukt til klassifisering:" + '\n' + '\n'
-				   )
 
-	return json.dumps(res)
+		total_time = time.time() - start
+
+
+		log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
+					   + str(text) + "\n" + "\n"
+					   + str(res) + "\n" + "\n"
+					   + "Tid brukt:" + str(total_time) + "\n" + "\n"
+					   + "Tekst brukt til klassifisering:" + '\n' + '\n'
+					   )
+
+		return json.dumps(res)
+
+	except Exception as e:
+		return json.dumps("Noe gikk galt")
+
 	#return request.json
 if __name__ == '__main__':
 	init()

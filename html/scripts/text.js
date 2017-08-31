@@ -1,7 +1,7 @@
 function populateList(url,result,id_name){
               var listContainer = document.getElementById(id_name);
               var header = document.createElement("h2")
-              var paragraph= document.createTextNode("Her er resultatet fra: ");
+              var paragraph= document.createTextNode("Her er resultatet fra klassifiseringen: ");
               header.appendChild(paragraph);
               listContainer.appendChild(header);
               var newList = document.createElement("ul");
@@ -36,6 +36,12 @@ function getClassificationText(){
     result=JSON.parse(result);
     console.log(result);
     console.log(typeof result);
+    if (result=="Noe gikk galt"){
+      getElementById("results")="Noe gikk veldig galt. Prøv annen input";
+    }
+    else{
+      populateList(text,result,"results");
+    }
 
-    populateList(text,result,"results");
+    
 }
