@@ -3,20 +3,40 @@ function populateList(url,result,id_name){
 
               var newList = document.createElement("ul");
               newList.setAttribute("id", "resultUL");
-
-
               for(var i = 0 ; i < result.length ; i ++)
                   {
 
                       var newListItem = document.createElement("li");
-                      var probability=parseFloat(result[i][1])*100;
-                      newListItem.innerHTML = "Label: <b>"+result[i][0] + "</b>  Sannsynlighet: <b>"+probability+"%</b>";
+                      var probability=parseFloat(result[i][1]);
+                      var probability_text =""
+                      if (0<=probability && probability<0.05){
+                        continue;
+                      }
+                      else if (0.05<=probability && probability<0.25){
+                        probability_text="svært lite sannsynlig"
+                      }
+                      else if (0.25<=probability && probability<0.50){
+                        probability_text="litt sannsynlig"
+                      }
+                      else if (0.50<=probability && probability<0.75){
+                        probability_text="ganske sannsynlig"
+                      }
+                      else if (0.75<=probability && probability<=1.0){
+                        probability_text="svært Sannsynlig"
+                      }
+                      newListItem.innerHTML = "Dewey-nr: <b>"+result[i][0] + "</b> er "+probability_text;
 
                       newList.appendChild(newListItem);
 
                   }
-
-              listContainer.insertBefore(newList, listContainer.childNodes[0]);
+              if (newList.childElementCount !=0){
+                listContainer.insertBefore(newList, listContainer.childNodes[0]);
+              }
+              else{
+                var feilmelding=document.createTextNode("Beklager, men det var ingen dewey-nr som er spesielt sannsynlige.")
+                listContainer.insertBefore(feilmelding, listContainer.childNodes[0]);
+              }
+              
               var header = document.createElement("h2")
               var paragraph= document.createTextNode("Her er resultatet fra klassifiseringen: ");
               header.appendChild(paragraph);
