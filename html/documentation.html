@@ -4,24 +4,16 @@
 <title>NORART klassifikator</title>
 <meta charset="UTF-16">
 <link rel="stylesheet" href="styles/layout.css" type="text/css">
+  <script src="lib/jquery.js"></script> 
+    <script> 
+    $(function(){
+      $("#includedContent").load("menu.html"); 
+    });
+  </script> 
 </head>
 <body>
-<div class="wrapper row1">
-  <header id="header" class="clear">
-    <div id="hgroup">
-      <h1><a href="index.html">NORART Klassifikator</a></h1>
-      <h2>Verktøy for å klassifisere NORART-artikler.</h2>
-    <nav>
-      <ul>
-        <li><a href="text.html">Klassifisering av fulltekst</a></li>
-        <li><a href="link.html">Klassifisering av URL eller LINK</a></li>
-        <li><a href="documentation.html">Dokumentasjon</a></li>
-      </ul>
-    </nav>
-    </div>
-  </header>
-</div>
-
+<div class="wrapper row1" id="includedContent">
+</div>  
 <div class="wrapper row2">
   <div id="container" class="clear">
       <article class="two_third">
