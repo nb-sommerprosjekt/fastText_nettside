@@ -1,10 +1,8 @@
 function populateList(url,result,id_name){
               var listContainer = document.getElementById(id_name);
-              var header = document.createElement("h2")
-              var paragraph= document.createTextNode("Her er resultatet fra klassifiseringen: ");
-              header.appendChild(paragraph);
-              listContainer.appendChild(header);
+
               var newList = document.createElement("ul");
+              newList.setAttribute("id", "resultUL");
 
 
               for(var i = 0 ; i < result.length ; i ++)
@@ -18,8 +16,11 @@ function populateList(url,result,id_name){
 
                   }
 
-              listContainer.appendChild(newList);
-
+              listContainer.insertBefore(newList, listContainer.childNodes[0]);
+              var header = document.createElement("h2")
+              var paragraph= document.createTextNode("Her er resultatet fra klassifiseringen: ");
+              header.appendChild(paragraph);
+              listContainer.insertBefore(header, listContainer.childNodes[0]);
 }
 
 function getClassificationText(){
