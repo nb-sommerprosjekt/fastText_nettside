@@ -75,8 +75,8 @@ def read_text_url():
 		print(PDF_boolean)
 		url_decoded = urllib.parse.unquote(url)
 		# Fikser urler som ikke er fullstendige. Altså mangler "http://".
-		#url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded, scheme='http'))
-		#	url_decoded = url_decoded.replace('///', '//')
+		url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded, scheme='http'))
+		url_decoded = url_decoded.replace('///', '//')
 
 		if PDF_boolean:
 			try:
