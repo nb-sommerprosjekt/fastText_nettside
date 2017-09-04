@@ -15,7 +15,7 @@ function getClassificationText(){
 	if (result=="Noe gikk galt"){
 		var listContainer = document.getElementById("results");
 		var header = document.createElement("h2")
-		var paragraph= document.createTextNode("Noe gikk galt under klassifiseringen. Teksten må være norsk. Om denne meldingen kommer når du prøver å klassifisere andre ting, kan det være noe feil med serveren. Vennligst ta kontakt med 'sommervikarene' om problemet vedvarer.");
+		var paragraph= document.createTextNode("Noe gikk galt under klassifiseringen. Teksten må være norsk. Om du er sikker på at du har fulgt kravene over, kan det være noe feil med serveren. Vennligst ta kontakt med 'sommervikarene' om problemet vedvarer.");
 		header.appendChild(paragraph);
 		listContainer.appendChild(header);
 	}
@@ -39,7 +39,7 @@ function populateList(url,result,id_name){
 		}
 		var probability_text =getProbabilityText(probability)
 
-		newListItem.innerHTML = "Dewey-nr: <b>"+result[i][0] + "</b> er "+probability_text;
+		newListItem.innerHTML = "Dewey-nr: <b>"+result[i][0] + "</b> er "+probability_text+ "  Klassebetegnelsen er \'"+result[i][2]+"\'.";
 
 		newList.appendChild(newListItem);
 
