@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>NORART klassifikator</title>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="styles/layout.css" type="text/css">
-<script type="text/javascript" src="scripts/text.js"></script>
+  <title>NORART klassifikator</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles/layout.css" type="text/css">
+  <script type="text/javascript" src="scripts/fastText.js"></script>
   <script src="lib/jquery.js"></script> 
-    <script> 
+  <script> 
     $(function(){
       $("#includedContent").load("menu.html"); 
     });
   </script> 
 </head>
 <body>
-<div class="wrapper row1" id="includedContent">
-</div>
-<!-- content -->
-<div class="wrapper row2">
-  <div id="container" class="clear">
-    <!-- Slider -->
-    <section id="slider" class="clear">
-      <figure>
+  <div class="wrapper row1" id="includedContent">
+  </div>
+  <!-- content -->
+  <div class="wrapper row2">
+    <div id="container" class="clear">
+      <!-- Slider -->
+      <section id="slider" class="clear">
+        <figure>
           <textarea id="text_from_user" placeholder="Her kan du lime inn artikkelen..." ></textarea>
           
 
-      </figure>
-      <button onclick="getClassificationText()">Klassifiser</button>
-    </section>
+        </figure>
+        <button onclick="getClassificationText()">Klassifiser</button>
+      </section>
       <article class="two_third" id="results">
-          <p>Artikkelen limes inn i vinduet og klassifiseres automatisk ved å trykke på "Klassifiser" knappen. Resultatet kommer opp i feltet under. Nyeste resultat øverst, tidligere resultater følger nedover på siden. Klassifiseren er per dags dato kun tilgjengelig for artikler på Norsk (Bokmål/Nynorsk), derfor vil input av tekster på andre språk gi feilmelding. </p>
+        <p>Artikkelen limes inn i vinduet og klassifiseres automatisk ved å trykke på "Klassifiser" knappen. Resultatet kommer opp i feltet under. Nyeste resultat øverst, tidligere resultater følger nedover på siden. Klassifiseren er per dags dato kun tilgjengelig for artikler på Norsk (Bokmål/Nynorsk), derfor vil input av tekster på andre språk gi feilmelding. </p>
 
-          For feilsøk:
-          <ul><b> Sjekkliste for tekstklassifikasjon:</b><li>Er teksten på norsk? (Bokmål/nynorsk)</li>
-            <li>Er teksten limt inn i vinduet?</li></ul></li></ul>
+        For feilsøk:
+        <ul><b> Sjekkliste for tekstklassifikasjon:</b><li>Er teksten på norsk? (Bokmål/nynorsk)</li>
+          <li>Er teksten limt inn i vinduet?</li></ul></li></ul>
 
-      </article>
-  </div>
-</div>
-<!-- Footer -->
-<div class="wrapper row3">  
-</div>
-</body>
-</html>
+        </article>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="wrapper row3">  
+    </div>
+  </body>
+  </html>

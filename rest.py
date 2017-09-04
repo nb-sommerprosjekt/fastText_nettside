@@ -68,11 +68,8 @@ def read_text_url():
 		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
 
 		input_to_rest = request.json
-		print(input_to_rest, "INPUT")
 		url = input_to_rest[0]
 		PDF_boolean = input_to_rest[1]
-		print(url)
-		print(PDF_boolean)
 		url_decoded = urllib.parse.unquote(url)
 		# Fikser urler som ikke er fullstendige. Altså mangler "http://".
 		url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded, scheme='http'))
@@ -81,7 +78,6 @@ def read_text_url():
 		if PDF_boolean:
 			try:
 				clean=retrieve_pdf_text(url_decoded)
-				print(clean)
 			except Exception as e:
 				print("The PDF-download failed!")
 		else:
@@ -140,7 +136,7 @@ def read_text():
 	#return request.json
 if __name__ == '__main__':
 	init()
-	classifier_name = "model_final100.bin"
+	classifier_name = "model_final2.bin"
 	classifieren = fasttext.load_model(classifier_name)
 	original_sigint = signal.getsignal(signal.SIGINT)
 	signal.signal(signal.SIGINT, finito)
