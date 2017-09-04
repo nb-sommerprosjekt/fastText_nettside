@@ -10,6 +10,7 @@ import urllib
 import classifier
 import preprocessor
 import json
+import PyPDF2
 
 
 
@@ -38,25 +39,57 @@ def finito(signum, frame):
 	print("Finito")
 	exit()
 
+def retrieve_pdf_text(url):
+    content = ""
+    try:
+
+        urllib.request.urlretrieve(url, "temp.pdf")
+        with open("temp.pdf", 'rb') as f:
+            pdfReader = PyPDF2.PdfFileReader(f)
+            for page_num in range(pdfReader.getNumPages()):
+                content += pdfReader.getPage(page_num).extractText()
+
+    except Exception as e:
+        print("FAILURE AT PDF CONVERTING")
+        print(url)
+        print(e)
+        return e
+
+    return str(content)
 
 
-@app.route('/rest_doc/<path:url>', methods = ['GET'])
-def read_text_url(url):
+@app.route('/rest_link/', methods = ['GET','POST'])
+def read_text_url():
 	try:
+
+
 		global log_file
 		start = time.time()
 		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
 
+		input_to_rest = request.json
+		print(input_to_rest, "INPUT")
+		url = input_to_rest[0]
+		PDF_boolean = input_to_rest[1]
+		print(url)
+		print(PDF_boolean)
 		url_decoded = urllib.parse.unquote(url)
 		# Fikser urler som ikke er fullstendige. Altså mangler "http://".
-		url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded, scheme='http'))
-		url_decoded = url_decoded.replace('///', '//')
+		#url_decoded = urllib.parse.urlunparse(urllib.parse.urlparse(url_decoded, scheme='http'))
+		#	url_decoded = url_decoded.replace('///', '//')
 
-		r = requests.get(url_decoded)
-		soup = BeautifulSoup(r.text)
-		streng = soup.get_text()
-		streng.encode('utf8')
-		clean = html2text(streng)
+		if PDF_boolean:
+			try:
+				clean=retrieve_pdf_text(url_decoded)
+				print(clean)
+			except Exception as e:
+				print("The PDF-download failed!")
+		else:
+			r = requests.get(url_decoded)
+			soup = BeautifulSoup(r.text)
+			streng = soup.get_text()
+			streng.encode('utf8')
+			clean = html2text(streng)
 
 
 		res = classifier.run_classification(clean, classifieren, 3)
@@ -72,6 +105,7 @@ def read_text_url(url):
 
 		return json.dumps(res)
 	except Exception as e:
+		print(e)
 		return json.dumps("Noe gikk galt")
 
 @app.route('/rest_text/', methods = ['GET','POST'])

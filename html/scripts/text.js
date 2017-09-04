@@ -15,9 +15,11 @@ function getClassificationText(){
 	if (result=="Noe gikk galt"){
 		var listContainer = document.getElementById("results");
 		var header = document.createElement("h2")
+		header.setAttribute("id", "failureH2");
+		
 		var paragraph= document.createTextNode("Noe gikk galt under klassifiseringen. Teksten må være norsk. Om du er sikker på at du har fulgt kravene over, kan det være noe feil med serveren. Vennligst ta kontakt med 'sommervikarene' om problemet vedvarer.");
 		header.appendChild(paragraph);
-		listContainer.appendChild(header);
+		listContainer.insertBefore(header, listContainer.childNodes[0]);
 	}
 	else{
 		populateList(text,result,"results");
