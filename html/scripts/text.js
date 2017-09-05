@@ -1,7 +1,7 @@
 function getClassificationText(){
 
 	var text =  document.getElementById('text_from_user').value;
-	var server_url = "http://tensor-1.nb.no:5000/rest_text/";
+	var server_url = "http://0.0.0.0:5000/rest_text/";
 	var xhttp = new XMLHttpRequest();
 	var result=xhttp.open("POST", server_url, false);
 	xhttp.setRequestHeader("Content-type","application/json");

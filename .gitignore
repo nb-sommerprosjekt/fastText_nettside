@@ -4,3 +4,4 @@ model_final2.bin
 log_file.txt
 *.idea
 *__pycache__
+.pckl
