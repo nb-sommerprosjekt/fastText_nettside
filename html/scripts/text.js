@@ -64,7 +64,7 @@ function getProbabilityText(probability){
 	var probability_text =""
 
 	if (0.05<=probability && probability<0.25){
-		probability_text="svært lite sannsynlig"
+		probability_text="mindre sannsynlig"
 	}
 	else if (0.25<=probability && probability<0.50){
 		probability_text="litt sannsynlig"
