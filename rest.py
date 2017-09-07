@@ -11,6 +11,7 @@ import classifier
 import preprocessor
 import json
 import PyPDF2
+import pickle
 
 
 
@@ -88,7 +89,7 @@ def read_text_url():
 			clean = html2text(streng)
 
 
-		res = classifier.run_classification(clean, classifieren, 3)
+		res = classifier.run_classification(clean, classifieren, klassebetegnelser, 3)
 
 		total_time = time.time() - start
 
@@ -115,7 +116,7 @@ def read_text():
 		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
 		text.encode('utf8')
 
-		res = classifier.run_classification(text, classifieren, 3)
+		res = classifier.run_classification(text, classifieren, klassebetegnelser,3)
 
 
 		total_time = time.time() - start
@@ -138,6 +139,8 @@ if __name__ == '__main__':
 	init()
 	classifier_name = "model_final2.bin"
 	classifieren = fasttext.load_model(classifier_name)
+	with open("klassebetegnelser_dict.pckl", "rb") as open_file:
+		klassebetegnelser = pickle.load(open_file)
 	original_sigint = signal.getsignal(signal.SIGINT)
 	signal.signal(signal.SIGINT, finito)
 	app.run(debug=True, host='0.0.0.0', port=5000)

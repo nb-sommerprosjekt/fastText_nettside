@@ -1,16 +1,16 @@
 import fasttext
 from preprocessor import text_to_clean_stemmed_text
 import time
-import pickle
-
-with open("klassebetegnelser_dict.pckl", "rb") as open_file:
-    klassebetegnelser = pickle.load(open_file)
 
 
-def run_classification(text, classifier, k):
+
+
+
+def run_classification(text, classifier, klassebetegnelser, k):
     # To debug run time
     tid = time.time()
     klassebetegnelser_topk = []
+
     try:
         text = text_to_clean_stemmed_text(text, True)
 
