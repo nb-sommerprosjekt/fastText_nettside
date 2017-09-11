@@ -12,7 +12,7 @@ import preprocessor
 import json
 import PyPDF2
 import pickle
-
+import os
 
 
 import time
@@ -58,6 +58,26 @@ def retrieve_pdf_text(url):
 
     return str(content)
 
+def log_classification(text,res,st,total_time, pdf,url):
+
+	id_article=str(time.time()*100).split(".")[0]
+	if not os.path.exists("logs"):
+		os.makedirs("logs")
+	with open("logs/"+"meta-"+str(id_article)+".txt","w") as article_file:
+		article_file.write("tidspunkt:::{}\n".format(str(st)))
+		article_file.write("tid brukt:::{}\n".format(str(total_time)))
+		article_file.write("artikkel id:::{}\n".format(id_article))
+		article_file.write("pdf:::{}\n".format(pdf))
+		article_file.write("url:::{}\n".format(url))
+
+		article_file.write("klassifisering:\n")
+		for i,line in enumerate(res):
+			article_file.write("result {}: {}\n".format((i+1),line))
+	if not os.path.exists("texts"):
+		os.makedirs("texts")
+	with open("texts/" + str(id_article) + ".txt", "w") as text_file:
+		text_file.write(text)
+	return id_article
 
 @app.route('/rest_link/', methods = ['GET','POST'])
 def read_text_url():
@@ -80,7 +100,8 @@ def read_text_url():
 			try:
 				clean=retrieve_pdf_text(url_decoded)
 			except Exception as e:
-				print("The PDF-download failed!")
+				print(e)
+				raise type(e)(e.message + "The PDF-download failed!")
 		else:
 			r = requests.get(url_decoded)
 			soup = BeautifulSoup(r.text)
@@ -93,20 +114,19 @@ def read_text_url():
 
 		total_time = time.time() - start
 
-		log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
-					   + str(url_decoded) + "\n" + "\n"
-					   + str(res) + "\n" + "\n"
-					   + "Tid brukt:" + str(total_time) + "\n" + "\n"
-					   + "Tekst brukt til klassifisering:" + '\n' + '\n'
-					   + str(preprocessor.text_to_clean_stemmed_text(clean, False)))
+		article_id = log_classification(clean, res, st, total_time, PDF_boolean, url)
+		log_file.write("tidspunkt:::" + str(st) + '\n'
+					   + "url:::"+ str(url) + "\n"
+					   + "Tid brukt:::" + str(total_time)
+					   + str(res) + "\n" + "\n\n")
 
-		return json.dumps(res)
+
+		return json.dumps([res, article_id])
 	except Exception as e:
 		print(e)
 		return json.dumps("Noe gikk galt")
 
 @app.route('/rest_text/', methods = ['GET','POST'])
-
 def read_text():
 	try:
 		text = request.json
@@ -121,18 +141,30 @@ def read_text():
 
 		total_time = time.time() - start
 
+		article_id = log_classification(text, res, st, total_time, False, None)
+		log_file.write("tidspunkt:::" + str(st) + '\n'
+					   + "tekstlengde:::" + str(len(text)) + "\n"
+					   + "Tid brukt:::" + str(total_time) + "\n"
+					   + str(res) + "\n" + "\n\n")
 
-		log_file.write("Tidspkt:" + str(st) + '\n\n' + "url:::"
-					   + str(text) + "\n" + "\n"
-					   + str(res) + "\n" + "\n"
-					   + "Tid brukt:" + str(total_time) + "\n" + "\n"
-					   + "Tekst brukt til klassifisering:" + '\n' + '\n'
-					   )
 
-		return json.dumps(res)
+		return json.dumps([res, article_id]	)
 
 	except Exception as e:
+		print(e)
 		return json.dumps("Noe gikk galt")
+
+@app.route('/rest_feedback/', methods=['POST'])
+def post_feedback():
+	input_to_rest = request.json.split(",")
+	print(input_to_rest)
+	article_id=input_to_rest[1]
+	print(article_id)
+	feedback=input_to_rest[0]
+	with open("logs/"+"meta-"+article_id+".txt","a") as article:
+		article.write("feedback:::{}\n".format(feedback))
+	return ""
+
 
 	#return request.json
 if __name__ == '__main__':

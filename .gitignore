@@ -5,3 +5,6 @@ log_file.txt
 *.idea
 *__pycache__
 .pckl
+logs/
+texts/
+temp.pdf
