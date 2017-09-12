@@ -117,6 +117,7 @@ def read_text_url():
 		article_id = log_classification(clean, res, st, total_time, PDF_boolean, url)
 		log_file.write("tidspunkt:::" + str(st) + '\n'
 					   + "url:::"+ str(url) + "\n"
+					   + "article id:::"+ str(article_id) + "\n"
 					   + "Tid brukt:::" + str(total_time)
 					   + str(res) + "\n" + "\n\n")
 
@@ -144,6 +145,7 @@ def read_text():
 		article_id = log_classification(text, res, st, total_time, False, None)
 		log_file.write("tidspunkt:::" + str(st) + '\n'
 					   + "tekstlengde:::" + str(len(text)) + "\n"
+					   + "article id:::" + str(article_id) + "\n"
 					   + "Tid brukt:::" + str(total_time) + "\n"
 					   + str(res) + "\n" + "\n\n")
 
