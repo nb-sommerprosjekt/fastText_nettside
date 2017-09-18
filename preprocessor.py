@@ -71,3 +71,13 @@ def text_to_clean_stemmed_text(tekst,pdf):
     else:
         return Exception("Teksten er tom.")
 
+def simple_preprocessing(tekst):
+    #remove emails and urls
+    tekst = re.sub(r'\w+:\/{2}[\d\w-]+(\.[\d\w-]+)*(?:(?:\/[^\s/]*))*', "", tekst)
+    tekst = re.sub(
+        r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''',
+        "", tekst)
+    tekst = tekst.replace("\n", " ")
+    tekst = re.sub('[^a-zA-ZæøåÆØÅ,.]+', ' ', tekst)
+    tekst = tekst.replace("  ", " ")
+    return tekst

@@ -8,3 +8,5 @@ log_file.txt
 logs/
 texts/
 temp.pdf
+summarizer_output.txt
+temp.txt

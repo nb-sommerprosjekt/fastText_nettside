@@ -9,6 +9,7 @@ from html2text import html2text
 import urllib
 import classifier
 import preprocessor
+import run_summarizer
 import json
 import PyPDF2
 import pickle
@@ -71,8 +72,9 @@ def log_classification(text,res,st,total_time, pdf,url):
 		article_file.write("url:::{}\n".format(url))
 
 		article_file.write("klassifisering:\n")
-		for i,line in enumerate(res):
-			article_file.write("result {}: {}\n".format((i+1),line))
+		if res!=None:
+			for i,line in enumerate(res):
+				article_file.write("result {}: {}\n".format((i+1),line))
 	if not os.path.exists("texts"):
 		os.makedirs("texts")
 	with open("texts/" + str(id_article) + ".txt", "w") as text_file:
@@ -125,7 +127,7 @@ def read_text_url():
 		return json.dumps([res, article_id])
 	except Exception as e:
 		print(e)
-		return json.dumps("Noe gikk galt")
+		return json.dumps(["Noe gikk galt"])
 
 @app.route('/rest_text/', methods = ['GET','POST'])
 def read_text():
@@ -154,7 +156,7 @@ def read_text():
 
 	except Exception as e:
 		print(e)
-		return json.dumps("Noe gikk galt")
+		return json.dumps(["Noe gikk galt"])
 
 @app.route('/rest_feedback/', methods=['POST'])
 def post_feedback():
@@ -168,6 +170,25 @@ def post_feedback():
 	return ""
 
 
+@app.route('/rest_summarize/', methods = ['GET','POST'])
+def summarize_text():
+	try:
+		text = request.json
+		print(request.json)
+		global log_file
+		start = time.time()
+		st = datetime.datetime.fromtimestamp(start).strftime('%Y-%m-%d %H:%M:%S')
+		text.encode('utf8')
+		result= run_summarizer.summarize_text(text)
+
+		total_time = time.time() - start
+
+		article_id = log_classification(text, None, st, total_time, False, None)
+		return json.dumps([result,article_id])
+
+	except Exception as e:
+		print(e)
+		return json.dumps(["Noe gikk galt"])
 	#return request.json
 if __name__ == '__main__':
 	init()
