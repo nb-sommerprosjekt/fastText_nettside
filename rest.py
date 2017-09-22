@@ -74,7 +74,7 @@ def log_classification(text,res,st,total_time, pdf,url):
 		article_file.write("klassifisering:\n")
 		if res!=None:
 			for i,line in enumerate(res):
-				article_file.write("result {}: {}\n".format((i+1),line))
+				article_file.write("result:::{}:::{}\n".format((i),line))
 	if not os.path.exists("texts"):
 		os.makedirs("texts")
 	with open("texts/" + str(id_article) + ".txt", "w") as text_file:
@@ -160,13 +160,14 @@ def read_text():
 
 @app.route('/rest_feedback/', methods=['POST'])
 def post_feedback():
-	input_to_rest = request.json.split(",")
+	input_to_rest = request.json
 	print(input_to_rest)
 	article_id=input_to_rest[1]
+	button_id=input_to_rest[2]
 	print(article_id)
 	feedback=input_to_rest[0]
 	with open("logs/"+"meta-"+article_id+".txt","a") as article:
-		article.write("feedback:::{}\n".format(feedback))
+		article.write("button feedback:::{}:::{}\n".format(button_id,feedback))
 	return ""
 
 
