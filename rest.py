@@ -195,7 +195,7 @@ if __name__ == '__main__':
 	init()
 	classifier_name = "model_final2.bin"
 	classifieren = fasttext.load_model(classifier_name)
-	with open("klassebetegnelser_dict.pckl", "rb") as open_file:
+	with open("klassebetegnelser_dict2209_alldigits.pckl", "rb") as open_file:
 		klassebetegnelser = pickle.load(open_file)
 	original_sigint = signal.getsignal(signal.SIGINT)
 	signal.signal(signal.SIGINT, finito)
