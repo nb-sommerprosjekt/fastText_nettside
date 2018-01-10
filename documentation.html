@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <link rel="icon" href="nb_logo.jpeg">
+  <title>NORART klassifikator</title>
+  <meta charset="UTF-16">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+  <link rel="stylesheet" href="styles/layout.css" type="text/css">
+  <script type="text/javascript" src="scripts/fastText.js"></script>
+  <script src="lib/jquery.js"></script> 
+  <script> 
+    $(function(){
+      $("#includedContent").load("menu.html"); 
+    });
+  </script> 
+</head>
+<body>
+  <div class="wrapper row1" id="includedContent">
+  </div>  
+  <div class="wrapper row2">
+    <div id="container" class="clear">
+      <article class="two_third">
+        <p>Her kommer det informasjon om hvordan man bruker denne siden. Det er to forskjellige måter for å sende inn artikler til klassifikatoren. En kan enten lime inn <a href="text.html">fullteksten</a>, eller så kan en gi en <a href="link.html">URL</a>, og så vil siden prøve å hente artikkelen automatisk her</p>
+        <p>Feil som kan oppstå:</p>
+        <ul>
+          <li>Applikasjonen klarer ikke å klassifisere linken som jeg limer inn - Mulige problemer og løsninger:  
+            <ul>
+              <li>Ikke alle nettsteder kan klassifiseres pga at de ikke tillater automatisk nedhenting av informasjon (scraping). En løsning her er kopiere teksten fra nettsiden og lime den inn i tekstklassifisereren.
+              </li>
+              <li><b>Sjekkliste for feilsøking av lenke-klassifikasjon:</b>
+              </li>
+              <ul>
+                <li>Linken er ufullstendig - Sjekk at hele lenken er kopiert
+                </li>
+                <li>Er dette en DOI lenke? - Denne versjonen av klassifisereren støtter ikke DOI. Teksten kan kopieres og klassifiseres <a href="text.html">her</a>
+                </li>
+                <li>Skal du linke til en PDF, må du linke direkte til PDFen.  OBS: Den støtter ikke innebygde PDF-lesere, så om siden benytter en slik en, må du kopiere inn teksten manuelt <a href="text.html">her</a>.
+                </ul> 
+
+              </li>
+            </ul> 
+            <li>Applikasjonen klarer ikke å klassifisere teksten som jeg limer inn - Mulige problemer og løsninger:
+            </li>
+            <ul>
+              <li>Applikasjonen er bare trent på norske artikler, så du vil få en feilmelding om du prøver å klassifisere ikke-norske tekster.Programmet vil ikke klare å klassifisere tekster som er kortere enn 2 linjer.</li>
+              <li><b> Sjekkliste for feilsøking av tekst-klassifisering:</b> 
+                <ul>
+                  <li>Er teksten på norsk? (Bokmål/nynorsk)
+                  </li>
+                  <li>Er teksten limt inn i vinduet?
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </ul>
+        </ul>
+        Skala for tilbakemelding fra klassifiserere:
+        <ul>
+          <li>Svært sannsynlig:   75%-100%</li>
+          <li>Ganske sannsynlig:  50%-74%</li>
+          <li>Litt sannsynlig:    25%-49%</li>
+          <li>Mindre sannsynlig:  5%-24%</li>
+          <li>Lavere enn 5% blir ikke vist. </li>
+        </ul> 
+        <b>Sammendrag</b>
+        <br>
+        Dette er ett verktøy for å lage enkle sammendrag av en tekst. Slik den fungerer er at den finner de statistisk viktigste setningene i tekstene, og presenterer dem i rett rekkefølge. På grunn av dette, så er det ingen garanti for at all viktig informasjon kommer med, eller at teksten kommer til å være sammenhengende.
+
+        <ul><b> Sjekkliste for tekstklassifikasjon:</b>
+          <li>Er teksten på norsk? (Bokmål/nynorsk)</li>
+          <li>Er teksten limt inn i vinduet?</li>
+        </ul>
+        <b>Kontaktinformasjon:</b>
+        <ul>
+          Knut Aron Fludal:
+          <li><b>Email:</b> knut.aron.fludal@nb.no</li>
+          <li><b>Telefon:</b> 46805929</li>
+          <li><b>Kontor:</b> Glassburet i 6.etg</li>
+        </ul>
+        <ul>
+          Andre Walsøe:
+          <li><b>Email:</b> Andre.Walsoe@nb.no</li>
+          <li><b>Telefon:</b> 41857036</li>
+        </ul>
+
+        Dokumentasjonen vil oppdateres løpende. Nåværende versjon er fra 22.09.2017.
+      </article>
+    </div>
+  </div>
+
+  <div class="wrapper row3">  
+  </div>
+</body>
+</html>
