@@ -91,7 +91,7 @@ def run_classification(text, model):
 		result=MLP_classifier.predict(text,  3)
 	elif model=="CNN":
 		result=CNN_classifier.predict(text,3)
-	elif result=="logreg":
+	elif model=="logreg":
 		result=logreg_classifier.predict(text,3)
 	else:
 		result = fasttext_classifier.predict(text, 3)
