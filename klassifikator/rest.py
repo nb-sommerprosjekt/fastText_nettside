@@ -18,6 +18,9 @@ from flask import request
 from flask_cors import CORS
 from html2text import html2text
 from MLP import MLP_model
+from CNN import CNN_model
+from logreg import logreg_model
+import gc
 
 
 app = Flask(__name__)
@@ -85,7 +88,13 @@ def run_classification(text, model):
 	if model=="fasttext":
 		result=fasttext_classifier.predict(text,3)
 	elif model=="MLP":
-		result=MLP_classifier.probability_prediction(text,  3)
+		result=MLP_classifier.predict(text,  3)
+	elif model=="CNN":
+		result=CNN_classifier.predict(text,3)
+	elif result=="logreg":
+		result=logreg_classifier.predict(text,3)
+	else:
+		result = fasttext_classifier.predict(text, 3)
 	return result
 
 
@@ -220,10 +229,13 @@ if __name__ == '__main__':
 	fasttext_name = "model_final2.bin"
 	fasttext_classifier=fastText(fasttext_name,klassebetegnelser)
 	MLP_classifier=MLP_model(klassebetegnelser)
+	CNN_classifier=CNN_model("config/cnn.yml",klassebetegnelser)
+	logreg_classifier=logreg_model("config/logreg.yml",klassebetegnelser)
 
 
 	original_sigint = signal.getsignal(signal.SIGINT)
 	signal.signal(signal.SIGINT, finito)
 	app.run(debug=True, host='0.0.0.0', port=5000)
+	gc.collect()
 	finito()
 

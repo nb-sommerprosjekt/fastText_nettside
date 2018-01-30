@@ -9,7 +9,7 @@ from nltk.corpus import stopwords
 
 
 
-def text_to_clean_stemmed_text(tekst,pdf):
+def text_to_clean_stemmed_text(tekst,pdf,stemmed):
     norStem = snowball.NorwegianStemmer()
     with open('vocabulary.pickle', 'rb') as f:
         vocabulary=pickle.load(f)
@@ -60,10 +60,13 @@ def text_to_clean_stemmed_text(tekst,pdf):
             filtered_words = [word for word in tokens if word not in set(stopwords.words('norwegian'))]
 
             stemmed_words = list()
-            for word in filtered_words:
-                stemmed_words.append(norStem.stem(word))
+            if stemmed:
+                for word in filtered_words:
+                    stemmed_words.append(norStem.stem(word))
 
-            tekst = ' '.join(stemmed_words)
+                tekst = ' '.join(stemmed_words)
+            else:
+                tekst=" ".join(filtered_words)
 
             return tekst
         else:

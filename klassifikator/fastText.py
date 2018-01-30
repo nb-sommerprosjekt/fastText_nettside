@@ -1,19 +1,22 @@
 import fasttext
 import time
+import os
 from preprocessor import text_to_clean_stemmed_text
 
 class fastText():
 	def __init__(self,fasttext_name,klassebetegnelser):
-		self.model = fasttext.load_model(fasttext_name)
+		self.model = fasttext.load_model(os.path.join("fastText_model",fasttext_name))
 		self.klassebetegnelser =klassebetegnelser
 
 	def predict(self,text,k):
 		# To debug run time
+
+		locals()
 		tid = time.time()
 		klassebetegnelser_topk = []
 
 		try:
-			text = text_to_clean_stemmed_text(text, True)
+			text = text_to_clean_stemmed_text(text, True,False)
 
 			# Load pre-trained model
 

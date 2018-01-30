@@ -10,3 +10,11 @@ texts/
 temp.pdf
 summarizer_output.txt
 temp.txt
+test_mlp_class.py
+multiple_models_klassifikator.tar.gz
+*.tar.gz
+model.pickle
+klassifikator/CNN_model/*
+klassifikator/MLP_model/*
+klassifikator/logreg_model/*
+klassifikator/fasttext_model/*

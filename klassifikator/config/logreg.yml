@@ -1,0 +1,6 @@
+# python
+{
+logregModelPath : !!python/str /home/knutf/workspace/shipping_ready/fastText_nettside/klassifikator/logreg_model/model.pickle,
+logregVectorizerPath : !!python/str /home/knutf/workspace/shipping_ready/fastText_nettside/klassifikator/logreg_model/vectorizer
+
+}

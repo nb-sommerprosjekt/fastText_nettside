@@ -5,7 +5,7 @@
   <link rel="icon" href="nb_logo.jpeg">
   <title>NORART klassifikator</title>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="7200" />
+  <meta http-equiv="refresh" content="1800" />
   <link rel="stylesheet" href="styles/layout.css" type="text/css">
   <script type="text/javascript" src="scripts/fastText.js"></script>
   <script src="lib/jquery.js"></script> 
@@ -25,9 +25,15 @@
       <section id="slider" class="clear">
         <figure>
           <textarea id="text_from_user" placeholder="Her kan du lime inn artikkelen..." ></textarea>
-          
-
         </figure>
+        Om du har en preferanse på hvilken maskinlæringsmetode du vil bruke:
+        <form action="">
+          <input type="radio" name="machinelearning" value="fasttext" checked> FastText<br>
+          <input type="radio" name="machinelearning" value="MLP"> MLP<br>
+          <input type="radio" name="machinelearning" value="CNN"> CNN<br>
+          <input type="radio" name="machinelearning" value="logreg">logreg<br>
+
+        </form>
         <button onclick="getClassificationText()">Klassifiser</button>
       </section>
       <article class="two_third" id="results">
